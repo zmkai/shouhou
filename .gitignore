@@ -1,0 +1,15 @@
+.DS_Store
+.python-version
+.settings
+.project
+.pydevproject
+node_modules
+_book
+
+__pycache__
+
+.ropeproject
+*.pyc
+.idea/*
+tmp
+00[0-9][0-9]_*.py
