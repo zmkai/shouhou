@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'users',
 ]
 
+AUTH_USER_MODEL = "users.User"
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,7 +86,7 @@ DATABASES = {
         'NAME': 'shouhou',
         'USER':'postgres',
         'PASSWORD':'123456',
-        'HOST':'192.168.6.8',
+        'HOST':'192.168.6.82',
         'PORT':'5432',
     }
 }
