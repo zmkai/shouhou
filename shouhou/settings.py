@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'users',
 ]
 
+AUTH_USER_MODEL = "users.User"
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,10 +83,10 @@ WSGI_APPLICATION = 'shouhou.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'shouhou',
-        'USER':'postgres',
+        'NAME': 'postgres3',
+        'USER':'dingjun',
         'PASSWORD':'123456',
-        'HOST':'192.168.6.8',
+        'HOST':'127.0.0.1',
         'PORT':'5432',
     }
 }
