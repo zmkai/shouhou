@@ -1,0 +1,76 @@
+# 模块名 repair
+##1、 维保人员查看可接单
+#### 请求地址
+'''
+GET  /repair
+'''
+#### 请求参数
+name              |type  |NN|comments
+-------        -  |------|--|----------------------
+status            |string|  |维修表单是否被接单
+
+#### 响应  
+##### 200 
+
+'''
+所有status='0'的维修表单
+'''
+
+## 2、维保人员查看已接单  
+#### 请求地址
+'''
+GET  /repair/id
+'''
+#### 请求参数
+
+name              |type  |NN|comments
+--------          |------|--|------------------------
+id                |serial|  |维修人员id
+#### 响应
+##### 200
+
+name              |type  |NN|comments
+--------          |------|--|----------------------
+name_id           |uuid  |  |维修表单id
+customer_id       |string|  |顾客id
+depot_id          |string|  |停车场id
+create_time       |date  |  |维修表单创建时间
+title             |string|T |维修表单标题
+problem_desciption|string|T |问题描述
+		
+ 
+## 3、抢单
+#### 请求地址
+'''
+UPDATA  /repair/numbe_id
+'''
+#### 请求参数
+name      |type   |NN|comments
+-----     |----   |--|----------------------
+number_id |uuid   |  |维修表单id
+
+#### 响应
+##### 200
+name         |type  |comments
+-------------|--- --|----------------------
+status       |string| 维修表单接单标识改为‘1’
+
+##4、完成单
+#### 请求地址
+'''
+UPDATA  /repair/weibao_account
+'''
+
+####请求参数
+name          |type   |NN|comments
+-----         |----   |--|----------------------
+weibao_account|string |T |维修人员账号
+
+#### 响应
+#### 200
+
+name         |type  |comments
+-------------|--- --|----------------------
+finish_status|string| 维修表单接单标识改为‘1’
+receive_time |DATE  |维修表单完成时间
+
