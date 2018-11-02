@@ -7,7 +7,6 @@ import json
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-
 from repair.forms import ReceivingForm, ReceivedForm,UnReceiveForm
 from repair.forms import RepairForm_p, RepairForm_g
 from repair.models import Repair
@@ -37,7 +36,6 @@ class RepairView(View):
         page = rep.data.get('page')
         pageSize = int(rep.data.get('pageSize'))
         response = {}
-        # repair_list = Repair.objects.all()
         paginator = Paginator(repairs, pageSize)
         response['total'] = paginator.count
         try:
