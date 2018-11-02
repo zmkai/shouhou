@@ -5,14 +5,15 @@ import json
 from django.http import HttpResponse
 import time
 from stars.models import Stars
-# from django.contrib.auth.decorators import login_required
-# from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from repair.form import ReceivedForm, ReceivingForm, UnReceiveForm
 # from parking_passport_client.django.decorators import token_required
 # Create your views here.
 
 
 class UnReceiveView(View):
+    @method_decorator(login_required(login_url='#'))
     # 查看可接单，显示信息为维保单的标题
     def get(self, request):
         # res = UnReceiveForm(request.GET)
@@ -44,6 +45,7 @@ class ReceivingView(View):
     def now_time(self):
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
 
+    @method_decorator(login_required(login_url='#'))
     # 查看显示表单标题的详细信息
     def get(self, request):
         res = ReceivingForm(request.GET)
@@ -58,7 +60,7 @@ class ReceivingView(View):
         return HttpResponse(200, data_json)
 
     # 抢单
-    # @method_decorator(login_required)
+    @method_decorator(login_required)
     def put(self, request):
         stream = request.body.decode()
         json_data = json.loads(stream)
@@ -78,6 +80,7 @@ class ReceivedView(View):
     def now_time(self):
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
 
+    @method_decorator(login_required(login_url='#'))
     # 查看已接单，显示信息为表单标题
     def get(self, request):
         res = ReceivedForm(request.GET)
@@ -98,6 +101,7 @@ class ReceivedView(View):
         else:
             return HttpResponse(400)
 
+    @method_decorator(login_required(login_url='#'))
     # 完成维修单
     def put(self, request):
         stream = request.body.decode()
