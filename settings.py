@@ -49,7 +49,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -89,14 +89,6 @@ DATABASES = {
         'HOST':'192.168.6.82',
         'PORT':'5432',
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'shouhou',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '157382',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '5432',
-    # }
 }
 
 
@@ -161,4 +153,3 @@ LOGGING = {
         },
     },
 }
-
