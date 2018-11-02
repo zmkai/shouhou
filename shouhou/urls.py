@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^', include('repair.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('users.urls'))
+
 ]
