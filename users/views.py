@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 from .utils import JsonUtil
@@ -16,7 +17,7 @@ class UserView(View):
     '''
         添加一条维保人员信息
     '''
-    @login_required(login_url='#')
+    @method_decorator(login_required)
     def post(self,request):
         print('post')
         params = JsonUtil.dict_request(request)
@@ -42,7 +43,7 @@ class UserView(View):
     '''
         根据传入的用户账号进行相关信息的修改或者修改用户密码
     '''
-    @login_required(login_url='#')
+    @method_decorator(login_required(login_url='#'))
     def put(self,request):
         print('put')
         params = JsonUtil.dict_request(request)
@@ -78,7 +79,7 @@ class UserView(View):
     '''
         根据用户账户进行删除
     '''
-    @login_required(login_url='#')
+    @method_decorator(login_required(login_url='#'))
     def delete(self,request):
         print('put')
         try:
@@ -96,16 +97,21 @@ class UserView(View):
     '''
         通过用户账号获取一个用户信息
     '''
-    @login_required(login_url='#')
+    @method_decorator(login_required(login_url='#'))
     def get(self,request):
         print('put')
         try:
             params = request.GET
             # print(params)
             user_name = params.get('username')
-            user = User.objects.get(username=user_name)
-            user_dict = {'username':user.username,'telephone':user.telephone,'id':user.id}
-            json_str = JsonUtil.json_response("0", "查询成功", json.dumps(user_dict))
+            user = User.objects.filter(is_staff=True).filter(username__exact=user_name)[0]
+            if user == None:
+                json_str = JsonUtil.json_response("1", "当前未注册", None)
+            else:
+                print(user)
+                # user = User.objects.get(username=user_name)
+                user_dict = {'username':user.username,'telephone':user.telephone,'id':user.id}
+                json_str = JsonUtil.json_response("0", "查询成功", json.dumps(user_dict))
         except:
             json_str = JsonUtil.json_response("1", "查询出现异常，请稍后再试", None)
         print(json_str)
@@ -134,7 +140,8 @@ class UsersView(View):
     '''
         查询所有维保人员信息
     '''
-    @login_required(login_url='#')
+
+    @method_decorator(login_required(login_url='#'))
     def get(self,request):
         print('get')
         try:
