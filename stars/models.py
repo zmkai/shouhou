@@ -1,10 +1,9 @@
 from django.db import models
 import uuid
-# Create your models here.
+
 
 def unique_uuid():
     return uuid.uuid1().hex
-
 
 
 class Stars(models.Model):
@@ -13,6 +12,7 @@ class Stars(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True,null=True)
     star = models.FloatField(default=5)
+
 
     class Meta:
         db_table = 'star_table'

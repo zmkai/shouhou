@@ -18,9 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include('repair.urls')),
-    url(r'^', include('repair.urls')),
-
     url(r'^',include('comment.urls')),
-
-    url(r'^',include('stars.urls'))
 ]
