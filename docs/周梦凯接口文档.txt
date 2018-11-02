@@ -1,0 +1,415 @@
+#后台信息管理
+
+sessionid
+syd27alhfe0jh4onhvriqdonoujvlnsu
+# 后台信息管理
+## 添加维保人员账号(用户密码默认
+#### 请求地址
+	POST   /user/
+	
+
+#### 请求参数
+
+	name                  |type         |NN |comments
+	----------------------|-------------|---|----------------------
+	name                  |string       |   |用户名字
+	telephone             |string       |   |用户联系方式
+	username              |string       |   |用户账号
+
+	
+#### 响应
+
+##### 201
+
+成功，返回一个json字符串。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string |   |消息内容
+	code        |string |   |成功编码：0为成功，1为失败
+
+##### 422
+
+	请求参数错误。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string | T |消息内容
+	errors      |Error[]| T |错误内容
+	- field     |string |   |错误字段，`field`或`resource`必须有一个
+	- resource  |string |   |错误资源，`field`或`resource`必须有一个
+	- code      |string | T |错误类型
+
+#### 示例
+	HTTP/1.1 200 Ok
+{
+    "code": "0",
+    "message": "添加成功",
+}
+
+	HTTP/1.1 422 Unprocessable Entity
+{
+	"code":"1",
+    "message": "账号或密码错误",
+    "errors": [
+        {"field": "type", "code": "invalid"}
+    ]
+}
+
+
+
+# 后台信息管理
+## 修改维保人员信息
+#### 请求地址
+	PUT   /user/
+	
+
+#### 请求参数
+
+	name                  |type         |NN |comments
+	----------------------|-------------|---|----------------------
+	telephone             |string       |   |用户联系方式
+	name                  |string       |   |用户名
+	username              |string       |   |用户账号
+	op_type               |string       |   |用户执行的修改类型，0为修改相关信息，1为修改密码
+
+	
+#### 响应
+
+##### 200
+
+成功，返回一个json字符串。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string |   |消息内容
+	code        |string |   |成功编码：0为成功，1为失败
+
+##### 422
+
+	请求参数错误。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string | T |消息内容
+	errors      |Error[]| T |错误内容
+	- field     |string |   |错误字段，`field`或`resource`必须有一个
+	- resource  |string |   |错误资源，`field`或`resource`必须有一个
+	- code      |string | T |错误类型
+
+#### 示例
+	HTTP/1.1 200 Ok
+{
+    "code": "0",
+    "message": "修改成功",
+}
+
+	HTTP/1.1 422 Unprocessable Entity
+{
+	"code":"1",
+    "message": "修改出现异常",
+    "errors": [
+        {"field": "type", "code": "invalid"}
+    ]
+}
+
+# 后台信息管理
+## 维保人员修改密码
+#### 请求地址
+	PUT   /user/
+	
+
+#### 请求参数
+
+	name                  |type         |NN |comments
+	----------------------|-------------|---|----------------------
+	username              |string       |   |用户账号
+	password              |string       |   |要修改的密码
+	op_type               |string       |   |用户执行的修改类型，0为修改相关信息，1为修改密码
+
+	
+#### 响应
+
+##### 200
+
+成功，返回一个json格式的列表字符串。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string |   |消息内容
+	code        |string |   |成功编码：0为成功，1为失败
+
+
+##### 422
+
+	请求参数错误。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string | T |消息内容
+	errors      |Error[]| T |错误内容
+	- field     |string |   |错误字段，`field`或`resource`必须有一个
+	- resource  |string |   |错误资源，`field`或`resource`必须有一个
+	- code      |string | T |错误类型
+
+#### 示例
+	HTTP/1.1 200 Ok
+{
+    "code": "0",
+    "message": "修改密码成功",
+	"data”：[{"account":"11111","username":"xxxx","telephone":"111111111"}]
+}
+
+	HTTP/1.1 422 Unprocessable Entity
+{
+	"code":"1",
+    "message": "修改出现异常",
+    "errors": [
+        {"field": "type", "code": "invalid"}
+    ]
+}
+
+
+
+
+# 后台信息管理
+## 删除维保人员(物理删除)
+#### 请求地址
+	DELETE   /user/
+	
+
+#### 请求参数
+
+	name                  |type         |NN |comments
+	----------------------|-------------|---|----------------------
+	username              |string       |   |用户账号
+
+
+	
+#### 响应
+
+##### 200
+
+成功，返回一个json字符串。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string |   |消息内容
+	code        |string |   |成功编码：0为成功，1为失败
+
+##### 422
+
+	请求参数错误。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string | T |消息内容
+	errors      |Error[]| T |错误内容
+	- field     |string |   |错误字段，`field`或`resource`必须有一个
+	- resource  |string |   |错误资源，`field`或`resource`必须有一个
+	- code      |string | T |错误类型
+
+#### 示例
+	HTTP/1.1 200 Ok
+{
+    "code": "0",
+    "message": "删除成功",
+}
+
+	HTTP/1.1 422 Unprocessable Entity
+{
+	"code":"1",
+    "message": "删除出现异常",
+    "errors": [
+        {"field": "type", "code": "invalid"}
+    ]
+}
+
+
+
+
+
+
+# 后台信息管理
+## 查找全部维保人员信息
+#### 请求地址
+	GET   /user/
+	
+
+#### 请求参数
+
+	name                  |type         |NN |comments
+	----------------------|-------------|---|----------------------
+
+
+	
+#### 响应
+
+##### 200
+
+成功，返回一个json格式的列表字符串。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string |   |消息内容
+	code        |string |   |成功编码：0为成功，1为失败
+	data[user]  |string | T |维保人员的对象
+	-account    |string | T |维保人员的账号
+	-username   |string | T |维保人员的姓名
+	-telephone  |string | T |维保人员的联系方式
+
+##### 422
+
+	请求参数错误。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string | T |消息内容
+	errors      |Error[]| T |错误内容
+	- field     |string |   |错误字段，`field`或`resource`必须有一个
+	- resource  |string |   |错误资源，`field`或`resource`必须有一个
+	- code      |string | T |错误类型
+
+#### 示例
+	HTTP/1.1 200 Ok
+{
+    "code": "0",
+    "message": "查询成功",
+	"data”：[{"account":"11111","username":"xxxx","telephone":"111111111"}]
+}
+
+	HTTP/1.1 422 Unprocessable Entity
+{
+	"code":"1",
+    "message": "查询出现了问题",
+    "errors": [
+        {"field": "type", "code": "invalid"}
+    ]
+}
+
+
+
+
+
+
+
+
+# 后台信息管理
+## 获取当前登录账号信息
+#### 请求地址
+	GET   /user/
+	
+
+#### 请求参数
+
+	name                  |type         |NN |comments
+	----------------------|-------------|---|----------------------
+	username               |string       |   |用户账号
+
+
+	
+#### 响应
+
+##### 200
+
+成功，返回一个json格式的列表字符串。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string |   |消息内容
+	code        |string |   |成功编码：0为成功，1为失败
+	data[user]  |string | T |维保人员的对象
+	-account    |string | T |维保人员的账号
+	-username   |string | T |维保人员的姓名
+	-telephone  |string | T |维保人员的联系方式
+
+
+
+##### 422
+
+	请求参数错误。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string | T |消息内容
+	errors      |Error[]| T |错误内容
+	- field     |string |   |错误字段，`field`或`resource`必须有一个
+	- resource  |string |   |错误资源，`field`或`resource`必须有一个
+	- code      |string | T |错误类型
+
+	HTTP/1.1 200 Ok
+{
+    "code": "0",
+    "message": "查询成功",
+	"data”：{"account":"11111","username":"xxxx","telephone":"111111111"}
+}
+
+	HTTP/1.1 422 Unprocessable Entity
+{
+	"code":"1",
+    "message": "查询出现了问题",
+    "errors": [
+        {"field": "type", "code": "invalid"}
+    ]
+}
+
+
+## 登录
+#### 请求地址
+	POST   /login/
+	
+
+#### 请求参数
+
+	name                  |type         |NN |comments
+	----------------------|-------------|---|----------------------
+	username              |string       |   |用户账号
+	password              |string       |   |用户密码
+
+
+	
+#### 响应
+
+##### 200
+
+成功，返回一个json格式的列表字符串。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string |   |消息内容
+	code        |string |   |成功编码：0为成功，1为失败
+	
+
+
+
+##### 422
+
+	请求参数错误。
+
+	name        |type   |NN |comments
+	------------|-------|---|----------------------------------------
+	message     |string | T |消息内容
+	errors      |Error[]| T |错误内容
+	- field     |string |   |错误字段，`field`或`resource`必须有一个
+	- resource  |string |   |错误资源，`field`或`resource`必须有一个
+	- code      |string | T |错误类型
+
+	HTTP/1.1 200 Ok
+{
+    "code": "0",
+    "message": "登录成功",
+	"data”：null
+}
+
+	HTTP/1.1 422 Unprocessable Entity
+{
+	"code":"1",
+    "message": "用户名不存在或者密码错误",
+    "errors": [
+        {"field": "type", "code": "invalid"}
+    ]
+}
+
+
+
+
