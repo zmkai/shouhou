@@ -1,10 +1,9 @@
 from django.db import models
 import uuid
-# Create your models here
 
 
 def unique_uuid():
-    return uuid.uuid1().hex()
+    return uuid.uuid1().hex
 
 
 class Stars(models.Model):

@@ -5,7 +5,7 @@ import uuid
 
 
 def unique_uuid():
-    return uuid.uuid1().hex()
+    return uuid.uuid1().hex
 
 
 class Comment(models.Model):

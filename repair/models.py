@@ -1,6 +1,4 @@
 from django.db import models
-
-# Create your models here.
 import uuid
 
 
@@ -44,6 +42,10 @@ class Repair(models.Model):
 
     class Meta:
         db_table = 'repair_table'
+
+    def __str__(self):
+        return '%s,%s,%s,%s,%s' % ('客户ID：'+self.customer_id, '停车场ID：'+self.depot_id, '维修单标题：'+self.title,'问题描述：'+ self.problem_desciption,
+                                   '完成状态：' + self.finish_status,)
 
 
 
