@@ -1,12 +1,10 @@
 from django.conf.urls import url
-from repair.views import RepairsView, RepairView, ReceiveView
+from repair.views import ReceivedView, ReceivingView, UnReceiveView
 
 
 urlpatterns = [
 
-    url(r'^repairs$', RepairsView.as_view()),
-    url(r'^repair$', RepairView.as_view()),
-    url(r'^receipts/(?P<weibao_account>.*)$', ReceiveView.as_view()),
-    url(r'^repairing$', ReceiveView.as_view()),
-    url(r'^repair/(?P<number_id>.*)$', RepairView.as_view())
+    url(r'^repaired$', ReceivedView.as_view()),
+    url(r'^repairing$', ReceivingView.as_view()),
+    url(r'^unrepairs$', UnReceiveView.as_view())
 ]
