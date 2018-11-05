@@ -1,11 +1,5 @@
 from django.db import models
-
-# Create your models here.
-import uuid
-
-
-def unique_uuid():
-    return uuid.uuid1().hex
+from util.uuid_util import unique_uuid
 
 
 class Comment(models.Model):

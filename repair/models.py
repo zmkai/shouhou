@@ -1,9 +1,7 @@
 from django.db import models
-import uuid
 
 
-def unique_uuid():
-    return uuid.uuid1().hex
+from util.uuid_util import unique_uuid
 
 
 class Repair(models.Model):

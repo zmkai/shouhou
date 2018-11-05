@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'shouhou.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres3',
-        'USER':'dingjun',
+        'NAME': 'shouhou',
+        'USER':'postgres',
         'PASSWORD':'123456',
-        'HOST':'127.0.0.1',
+        'HOST':'192.168.6.82',
         'PORT':'5432',
     }
     # 'default': {

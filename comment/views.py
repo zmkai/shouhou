@@ -14,7 +14,7 @@ from stars.views import StarsView
 
 class CommentView(View):
     # 客户填写评价表(文字,星级)
-    #@method_decorator(login_required(login_url="#"))
+    @method_decorator(login_required(login_url="#"))
     def post(self, request):
         rep = CommentForm(request.POST)
         if not rep.is_valid():
