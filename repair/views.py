@@ -22,7 +22,7 @@ class RepairView(View):
             return HttpResponseBadRequest(status=422,content=json.dumps({'code':1,'message':'Submitted failure'}))
         repair = Repair.objects.create(customer_id=rep.data.get('customer_id'),depot_id=rep.data.get('depot_id'),
                                        title=rep.data.get('title'),problem_desciption=rep.data.get('problem_desciption'))
-        return HttpResponse(status=201, content=json.dumps({'code':0,'message':'Submitted successfully'}))
+        return HttpResponse(status=201, content=json.dumps({'code':0,'message':'Submitted successfully','number_id':repair.number_id,'create_time':time.mktime(repair.create_time.timetuple())}))
 
     #客户查询维修单(分页查询)
     @method_decorator(login_required(login_url="#"))
@@ -53,7 +53,7 @@ class RepairView(View):
         stream = request.body.decode()
         json_data = json.loads(stream)
         repair = Repair.objects.filter(number_id=number_id).update(title=json_data['title'],problem_desciption=json_data['problem_desciption'],update_time=datetime.datetime.now())
-        return HttpResponse(status=200,content=json.dumps({'code':0,'message':'put successfully'}))
+        return HttpResponse(status=204,content=json.dumps({'code':0,'message':'put successfully'}))
 
 
 class UnReceiveView(View):

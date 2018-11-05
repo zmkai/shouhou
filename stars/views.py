@@ -10,7 +10,7 @@ from stars.models import Stars
 class StarsView(View):
     def createstar(self,star,weibao_account):
         stars=Stars.objects.create(star=star,weibao_account=weibao_account)
-
+        return stars
     # 统计所有维保人员的星级
     def get(self, request):
         avgs = Stars.objects.values('weibao_account').annotate(staravg=Avg('star'))
