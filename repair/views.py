@@ -1,3 +1,8 @@
+
+from django.shortcuts import render
+from stars.models import Stars
+from django.contrib.auth.decorators import login_required
+from repair.forms import ReceivedForm, ReceivingForm, UnReceiveForm
 import datetime
 import time
 from django.contrib.auth.decorators import login_required
@@ -7,13 +12,13 @@ import json
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from repair.forms import ReceivingForm, ReceivedForm,UnReceiveForm
+
 from repair.forms import RepairForm_p, RepairForm_g
 from repair.models import Repair
 
 
 class RepairView(View):
-    #客户申请维修单
+    # 客户申请维修单
     @method_decorator(login_required(login_url="#"))
     def post(self,request):
         rep = RepairForm_p(request.POST)
@@ -24,7 +29,7 @@ class RepairView(View):
                                        title=rep.data.get('title'),problem_desciption=rep.data.get('problem_desciption'))
         return HttpResponse(status=201, content=json.dumps({'code':0,'message':'Submitted successfully','number_id':repair.number_id,'create_time':time.mktime(repair.create_time.timetuple())}))
 
-    #客户查询维修单(分页查询)
+    # 客户查询维修单(分页查询)
     @method_decorator(login_required(login_url="#"))
     def get(self,request,customer_id):
         print(customer_id)
@@ -60,28 +65,32 @@ class UnReceiveView(View):
     @method_decorator(login_required(login_url='#'))
     # 查看可接单，显示信息为维保单的标题
     def get(self, request):
-        # res = UnReceiveForm(request.GET)
-        # if not res.is_valid():
-        #     return HttpResponse(422)
-        # data = Stars.objects.get(weibao_account=res.date.get('weibao_account'))
-        # stars = data.star
-        # print(stars)
-        # if stars <= 2:
-        #     pass
-        # elif stars < 3:
-        #     pass
-        # else:
-        #     pass
+        res = UnReceiveForm(request.GET)
+        if not res.is_valid():
+            return HttpResponse(422)
+        datas = Stars.objects.filter(weibao_account=res.data.get('weibao_account'))
+        num = datas.count()
+        stars = 0
+        for data in datas:
+            stars += data.star
+        stars = stars / num
+        print(stars)
         list = []
-        repair_forms = Repair.objects.filter(status=0)
+        if stars <= 2:
+            repair_forms = Repair.objects.filter(status=0).filter(
+                create_time__lte=datetime.datetime.now() + datetime.timedelta(minutes=-5))
+        elif stars < 4:
+            repair_forms = Repair.objects.filter(status=0).filter(
+                create_time__lte=datetime.datetime.now() + datetime.timedelta(minutes=-3))
+        else:
+            repair_forms = Repair.objects.filter(status=0)
         for repair_form in repair_forms:
             repair_form = repair_form.detail_info()
             title = repair_form['title']
-            print(title)
             list.append(title)
-            print(list)
+        print(list)
         data_json = json.dumps(list)
-        return HttpResponse(200, data_json)
+        return HttpResponse(201, data_json)
 
 
 class ReceivingView(View):
@@ -101,7 +110,7 @@ class ReceivingView(View):
             print(data)
             print(type(data))
             data_json = json.dumps(data)
-        return HttpResponse(200, data_json)
+        return HttpResponse(201, data_json)
 
 
     # 抢单
@@ -118,7 +127,7 @@ class ReceivingView(View):
         else:
             # 修改状态码，添加维保人员账号
             repair_forms.update(status='1', weibao_account=json_data['weibao_account'], receive_time=self.now_time())
-            return HttpResponse(200)
+            return HttpResponse(204)
 
 
 class ReceivedView(View):
@@ -142,7 +151,7 @@ class ReceivedView(View):
             print(list1)
             data_json = json.dumps(list1)
             # print(data_json)
-            return HttpResponse(200,data_json)
+            return HttpResponse(201,data_json)
         else:
             return HttpResponse(400)
 
@@ -156,7 +165,11 @@ class ReceivedView(View):
                                                                        solve_way=json_data['solve_way'],
                                                                        finish_status=1,
                                                                        update_time=self.now_time())
-        return HttpResponse(200)
+
+        return HttpResponse(204)
+
+
+
 
 
 
